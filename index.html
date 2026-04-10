@@ -12,25 +12,28 @@
 
     <header class="main-menu-bar">
         <div class="menu-left">
+            <i class="fas fa-bars mobile-menu-btn" onclick="toggleMobileMenu()"></i>
             <div class="logo-box">M</div>
             <span class="brand-name">MPCOE <strong>Toolkit</strong></span>
         </div>
         
-        <div class="menu-center">
+        <div class="menu-center hide-mobile">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="topSearch" placeholder="Search for tools..." onkeyup="filterTools()">
+                <input type="text" id="topSearch" placeholder="Search for tools...">
             </div>
         </div>
 
         <div class="menu-right">
-            <button class="nav-btn" onclick="openAuth()"><i class="fas fa-user-circle"></i> Login</button>
+            <button class="nav-btn hide-mobile" onclick="openAuth()"><i class="fas fa-user-circle"></i> Login</button>
             <button class="nav-btn-primary" onclick="openAuth()">Join Now</button>
         </div>
     </header>
 
     <div class="app-layout">
-        <aside class="sidebar-nav">
+        <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
+        <aside class="sidebar-nav" id="sidebar">
             <a href="#home" class="side-item active"><i class="fas fa-home"></i> Dashboard</a>
             <a href="#cgpa" class="side-item"><i class="fas fa-chart-pie"></i> CGPA Calc</a>
             <a href="#perc" class="side-item"><i class="fas fa-percent"></i> Percentage</a>
@@ -49,7 +52,7 @@
                 <div class="tool-glass">
                     <h2>CGPA Engine</h2>
                     <div class="input-inline">
-                        <input type="number" id="cgCount" placeholder="Number of Subjects">
+                        <input type="number" id="cgCount" placeholder="Subjects">
                         <button class="action-btn" onclick="generateInputs('cgpa')">Setup</button>
                     </div>
                     <div id="cgFields" class="input-grid"></div>
@@ -61,7 +64,7 @@
                 <div class="tool-glass">
                     <h2>Percentage Calculator</h2>
                     <div class="input-inline">
-                        <input type="number" id="pCount" placeholder="Number of Subjects">
+                        <input type="number" id="pCount" placeholder="Subjects">
                         <button class="action-btn" onclick="generateInputs('perc')">Setup</button>
                     </div>
                     <div id="pFields" class="input-grid"></div>
@@ -76,30 +79,9 @@
                         <span>Live Global Hub</span>
                     </div>
                     <div id="chatFeed" class="chat-feed">
-                        <div class="chat-msg">
-                            <img src="https://i.pravatar.cc/150?u=amit" alt="Amit">
-                            <div class="chat-bubble">
-                                <span class="sender">Amit Varma</span>
-                                <p>Hi everyone!</p>
-                            </div>
                         </div>
-                        <div class="chat-msg">
-                            <img src="https://i.pravatar.cc/150?u=priya" alt="Priya">
-                            <div class="chat-bubble">
-                                <span class="sender">Priya Das</span>
-                                <p>Hello Amit! Have you tried the new CGPA calculator yet?</p>
-                            </div>
-                        </div>
-                        <div class="chat-msg">
-                            <img src="https://i.pravatar.cc/150?u=amit" alt="Amit">
-                            <div class="chat-bubble">
-                                <span class="sender">Amit Varma</span>
-                                <p>Checking it right now! Looks smooth.</p>
-                            </div>
-                        </div>
-                    </div>
                     <div class="chat-bottom">
-                        <input type="text" id="msgInput" placeholder="Type hi or hello...">
+                        <input type="text" id="msgInput" placeholder="Message...">
                         <button class="send-icon" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
