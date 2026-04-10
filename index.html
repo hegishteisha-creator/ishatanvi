@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPCOE Toolkit | Engineering Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-menu-bar">
+        <div class="menu-left">
+            <div class="logo-box">M</div>
+            <span class="brand-name">MPCOE <strong>Toolkit</strong></span>
+        </div>
+        
+        <div class="menu-center">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="topSearch" placeholder="Search for tools..." onkeyup="filterTools()">
+            </div>
+        </div>
+
+        <div class="menu-right">
+            <button class="nav-btn" onclick="openAuth()"><i class="fas fa-user-circle"></i> Login</button>
+            <button class="nav-btn-primary" onclick="openAuth()">Join Now</button>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar-nav">
+            <a href="#home" class="side-item active"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="#cgpa" class="side-item"><i class="fas fa-chart-pie"></i> CGPA Calc</a>
+            <a href="#perc" class="side-item"><i class="fas fa-percent"></i> Percentage</a>
+            <a href="#chat" class="side-item"><i class="fas fa-comments"></i> Community</a>
+        </aside>
+
+        <main class="workspace">
+            <section id="home" class="page active">
+                <div class="welcome-card glass">
+                    <h1>Precision Tools for <span class="outline-text">MPCOE Engineers</span></h1>
+                    <p>Select a tool from the sidebar to get started.</p>
+                </div>
+            </section>
+
+            <section id="cgpa" class="page">
+                <div class="tool-glass">
+                    <h2>CGPA Engine</h2>
+                    <div class="input-inline">
+                        <input type="number" id="cgCount" placeholder="Number of Subjects">
+                        <button class="action-btn" onclick="generateInputs('cgpa')">Setup</button>
+                    </div>
+                    <div id="cgFields" class="input-grid"></div>
+                    <div id="cgResult" class="result-box hidden"></div>
+                </div>
+            </section>
+
+            <section id="perc" class="page">
+                <div class="tool-glass">
+                    <h2>Percentage Calculator</h2>
+                    <div class="input-inline">
+                        <input type="number" id="pCount" placeholder="Number of Subjects">
+                        <button class="action-btn" onclick="generateInputs('perc')">Setup</button>
+                    </div>
+                    <div id="pFields" class="input-grid"></div>
+                    <div id="pResult" class="result-box hidden"></div>
+                </div>
+            </section>
+
+            <section id="chat" class="page">
+                <div class="chat-box glass">
+                    <div class="chat-top">
+                        <div class="status-indicator"></div>
+                        <span>Live Global Hub</span>
+                    </div>
+                    <div id="chatFeed" class="chat-feed">
+                        <div class="chat-msg">
+                            <img src="https://i.pravatar.cc/150?u=amit" alt="Amit">
+                            <div class="chat-bubble">
+                                <span class="sender">Amit Varma</span>
+                                <p>Hi everyone!</p>
+                            </div>
+                        </div>
+                        <div class="chat-msg">
+                            <img src="https://i.pravatar.cc/150?u=priya" alt="Priya">
+                            <div class="chat-bubble">
+                                <span class="sender">Priya Das</span>
+                                <p>Hello Amit! Have you tried the new CGPA calculator yet?</p>
+                            </div>
+                        </div>
+                        <div class="chat-msg">
+                            <img src="https://i.pravatar.cc/150?u=amit" alt="Amit">
+                            <div class="chat-bubble">
+                                <span class="sender">Amit Varma</span>
+                                <p>Checking it right now! Looks smooth.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-bottom">
+                        <input type="text" id="msgInput" placeholder="Type hi or hello...">
+                        <button class="send-icon" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content glass">
+            <h3>Student Login</h3>
+            <input type="text" placeholder="Enrollment No" class="modal-input">
+            <input type="password" placeholder="Password" class="modal-input">
+            <button class="nav-btn-primary full" onclick="closeAuth()">Enter Toolkit</button>
+            <p onclick="closeAuth()" style="cursor:pointer; margin-top:10px; opacity:0.6">Close</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
