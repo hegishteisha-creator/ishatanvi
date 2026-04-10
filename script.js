@@ -1,59 +1,30 @@
-// Sidebar Page Switcher
+// Sidebar Page Switcher + Mobile Sidebar Control
+function toggleMobileMenu() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.querySelector('.sidebar-overlay').classList.toggle('active');
+}
+
 document.querySelectorAll('.side-item').forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         const target = item.getAttribute('href').substring(1);
         
+        // Remove active class from all
         document.querySelectorAll('.side-item').forEach(i => i.classList.remove('active'));
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         
+        // Add active class to current
         item.classList.add('active');
         document.getElementById(target).classList.add('active');
+
+        // If on mobile, close sidebar after clicking
+        if(window.innerWidth <= 992) {
+            toggleMobileMenu();
+        }
     });
 });
 
-// Chat Functionality
-function sendMsg() {
-    const input = document.getElementById('msgInput');
-    const feed = document.getElementById('chatFeed');
-    if(!input.value) return;
-
-    // Add User Message
-    feed.innerHTML += `
-        <div class="chat-msg">
-            <img src="https://i.pravatar.cc/150?u=me" alt="Me">
-            <div class="chat-bubble">
-                <span class="sender">You (Student)</span>
-                <p>${input.value}</p>
-            </div>
-        </div>
-    `;
-
-    const val = input.value.toLowerCase();
-    input.value = '';
-    feed.scrollTop = feed.scrollHeight;
-
-    // Auto-Reply Simulation
-    setTimeout(() => {
-        let reply = "I'm here to help with your calculations!";
-        if(val.includes('hi') || val.includes('hello')) {
-            reply = "Hello! Welcome to the MPCOE Community Hub. How can I assist you today?";
-        }
-
-        feed.innerHTML += `
-            <div class="chat-msg">
-                <img src="https://i.pravatar.cc/150?u=bot" alt="Bot">
-                <div class="chat-bubble">
-                    <span class="sender">System Bot</span>
-                    <p>${reply}</p>
-                </div>
-            </div>
-        `;
-        feed.scrollTop = feed.scrollHeight;
-    }, 800);
-}
-
-// Calculator Logic
+// Calculator Logic (Responsive version)
 function generateInputs(type) {
     const count = document.getElementById(type === 'cgpa' ? 'cgCount' : 'pCount').value;
     const container = document.getElementById(type === 'cgpa' ? 'cgFields' : 'pFields');
@@ -64,37 +35,47 @@ function generateInputs(type) {
         row.style.display = 'flex';
         row.style.gap = '10px';
         row.style.marginBottom = '10px';
+        row.style.flexWrap = 'wrap'; // Allow fields to stack on very small screens
+        
         row.innerHTML = type === 'cgpa' ? 
-            `<input type="number" placeholder="Grade" class="cg-g"> <input type="number" placeholder="Credit" class="cg-c">` :
-            `<input type="number" placeholder="Marks" class="p-m"> <input type="number" placeholder="Total" class="p-t">`;
+            `<input type="number" placeholder="Grade" class="cg-g" style="flex:1; min-width:80px"> <input type="number" placeholder="Credit" class="cg-c" style="flex:1; min-width:80px">` :
+            `<input type="number" placeholder="Marks" class="p-m" style="flex:1; min-width:80px"> <input type="number" placeholder="Total" class="p-t" style="flex:1; min-width:80px">`;
         container.appendChild(row);
     }
     const btn = document.createElement('button');
-    btn.className = "nav-btn-primary";
-    btn.innerText = "Calculate";
+    btn.className = "nav-btn-primary full";
+    btn.style.width = "100%";
+    btn.style.marginTop = "10px";
+    btn.innerText = "Calculate Results";
     btn.onclick = () => type === 'cgpa' ? calcCGPA() : calcPerc();
     container.appendChild(btn);
 }
 
+// Logic for CalcCGPA and CalcPerc remains identical to your previous version...
+
 function calcCGPA() {
     let p=0, c=0;
     document.querySelectorAll('.cg-g').forEach((g, i) => {
-        p += (parseFloat(g.value) * parseFloat(document.querySelectorAll('.cg-c')[i].value));
-        c += parseFloat(document.querySelectorAll('.cg-c')[i].value);
+        if(g.value) {
+            p += (parseFloat(g.value) * parseFloat(document.querySelectorAll('.cg-c')[i].value));
+            c += parseFloat(document.querySelectorAll('.cg-c')[i].value);
+        }
     });
     const res = document.getElementById('cgResult');
-    res.innerText = "Final CGPA: " + (p/c).toFixed(2);
+    res.innerText = c > 0 ? "Final CGPA: " + (p/c).toFixed(2) : "Error";
     res.classList.remove('hidden');
 }
 
 function calcPerc() {
     let m=0, t=0;
     document.querySelectorAll('.p-m').forEach((m_el, i) => {
-        m += parseFloat(m_el.value);
-        t += parseFloat(document.querySelectorAll('.p-t')[i].value);
+        if(m_el.value) {
+            m += parseFloat(m_el.value);
+            t += parseFloat(document.querySelectorAll('.p-t')[i].value);
+        }
     });
     const res = document.getElementById('pResult');
-    res.innerText = "Result: " + ((m/t)*100).toFixed(1) + "%";
+    res.innerText = t > 0 ? "Result: " + ((m/t)*100).toFixed(1) + "%" : "Error";
     res.classList.remove('hidden');
 }
 
